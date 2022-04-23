@@ -3,17 +3,26 @@ package com.fatec.estacionamentotcc.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Veiculo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// private int id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	private String modelo;
 	private String cor;
 	private String placa;
 	private String tipo;
 	private String observacao;
 
-	public Veiculo(String modelo, String cor, String placa, String tipo, String observacao) {
+	public Veiculo(int id, String modelo, String cor, String placa, String tipo, String observacao) {
+		this.id=id;
 		this.modelo = modelo;
 		this.cor = cor;
 		this.placa = placa;

@@ -3,20 +3,28 @@ package com.fatec.estacionamentotcc.domain;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * esta classe vai gerenciar os serviÃ§os prestados pelo estacionamento
  *
  * @author lucas
  */
+@Entity
 public class Ticket implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	private int cod;
 	private Date chegada;
 	private Date saida;
