@@ -19,7 +19,10 @@ public class Fileira implements Serializable {
 	private ArrayList<Vaga> vagas;
 	private String descricao;
 
-
+	public Fileira() {
+		
+	}
+	
 	public Fileira(ArrayList<Vaga> vagas, String descricao) {
 		this.vagas = vagas;
 		this.descricao = descricao;

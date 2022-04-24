@@ -13,8 +13,8 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int codigo;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int cod;
 	String nome;
 	String telefone;
 	String rg;
@@ -22,6 +22,9 @@ public class Cliente implements Serializable {
 	String vencimento;
 	boolean bloqueado;
 	String observacao;
+
+	public Cliente() {
+	}
 
 	public Cliente(String nome, String telefone, String rg, double mensalidade, String vencimento, boolean bloqueado,
 			String observacao) {
@@ -36,7 +39,7 @@ public class Cliente implements Serializable {
 
 	public Cliente(int codigo, String nome, String telefone, String rg, double mensalidade, String vencimento,
 			boolean bloqueado, String observacao) {
-		this.codigo = codigo;
+		this.cod = codigo;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.rg = rg;
@@ -48,7 +51,7 @@ public class Cliente implements Serializable {
 
 	public Cliente(int codigo, String nome, String telefone, String rg, double mensalidade, String vencimento,
 			boolean bloqueado) {
-		this.codigo = codigo;
+		this.cod = codigo;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.rg = rg;
@@ -75,11 +78,11 @@ public class Cliente implements Serializable {
 	}
 
 	public int getCodigo() {
-		return codigo;
+		return cod;
 	}
 
 	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+		this.cod = codigo;
 	}
 
 	public String getNome() {
@@ -132,7 +135,7 @@ public class Cliente implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo, rg);
+		return Objects.hash(cod, rg);
 	}
 
 	@Override
@@ -144,7 +147,7 @@ public class Cliente implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		return codigo == other.codigo && Objects.equals(rg, other.rg);
+		return cod == other.cod && Objects.equals(rg, other.rg);
 	}
 
 }

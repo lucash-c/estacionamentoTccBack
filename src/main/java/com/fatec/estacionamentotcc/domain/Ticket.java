@@ -21,9 +21,9 @@ import javax.persistence.Id;
 @Entity
 public class Ticket implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int cod;
 	private Date chegada;
@@ -34,6 +34,9 @@ public class Ticket implements Serializable {
 
 	private Vaga vaga;
 	private Usuario usuario;
+
+	public Ticket() {
+	}
 
 	public Ticket(int cod) {
 		this.cod = cod;

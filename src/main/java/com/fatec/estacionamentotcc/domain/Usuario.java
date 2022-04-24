@@ -19,6 +19,10 @@ public class Usuario implements Serializable {
 	private String rg;
 	private String senha;
 	private String cargo;
+	
+	public Usuario() {
+		
+	}
 
 	public Usuario(int id, String nome, String rg, String senha, String cargo) {
 		this.id = id;

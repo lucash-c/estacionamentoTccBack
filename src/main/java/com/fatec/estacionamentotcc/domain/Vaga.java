@@ -11,14 +11,18 @@ import javax.persistence.Id;
 @Entity
 public class Vaga implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int indexFileira;
 	private int estado; // 1 para ocupado - 0 para desocupado
 	private String tipo;
 	private int fileiraId;
+
+	public Vaga() {
+
+	}
 
 	public Vaga(int fileiraId) {
 		this.fileiraId = fileiraId;

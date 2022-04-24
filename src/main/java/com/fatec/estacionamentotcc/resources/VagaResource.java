@@ -7,19 +7,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fatec.estacionamentotcc.domain.Usuario;
-import com.fatec.estacionamentotcc.services.UsuarioService;
+import com.fatec.estacionamentotcc.domain.Vaga;
+import com.fatec.estacionamentotcc.services.VagaService;
 
 @RestController
-@RequestMapping(value = "/usuarios")
-public class UsuarioResource {
+@RequestMapping(value = "/vagas")
+public class VagaResource {
 
 	@Autowired
-	UsuarioService service;
+	VagaService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Usuario obj = service.buscar(id);
+		Vaga obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
-	}
+	};
+
 }
