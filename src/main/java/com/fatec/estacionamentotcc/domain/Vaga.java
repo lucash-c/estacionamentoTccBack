@@ -7,6 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 public class Vaga implements Serializable {
@@ -15,50 +22,41 @@ public class Vaga implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int indexFileira;
 	private int estado; // 1 para ocupado - 0 para desocupado
 	private String tipo;
-	private int fileiraId;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy="vaga")
+	private Ticket ticket;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy="vaga")
+	private Movimento movimento;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="fileira_id")
+	private Fileira fileira;
+	private int indexFileira;
 
 	public Vaga() {
 
 	}
 
-	public Vaga(int fileiraId) {
-		this.fileiraId = fileiraId;
+	public Vaga(String tipo, Fileira fileira) {
+		this.tipo = tipo;
+		this.fileira = fileira;
 	}
 
-	public Vaga(int id, int indexFileira, int estado, String tipo, int fileiraId) {
+	public Vaga(int id, int estado, String tipo, Fileira fileira, int indexFileira) {
 		this.id = id;
-		this.indexFileira = indexFileira;
 		this.estado = estado;
 		this.tipo = tipo;
-		this.fileiraId = fileiraId;
-	}
-
-	public Vaga(int id, int indexFileira, String tipo, int fileiraId) {
-		this.id = id;
+		this.fileira = fileira;
 		this.indexFileira = indexFileira;
-		this.tipo = tipo;
-		this.fileiraId = fileiraId;
 	}
 
-	public Vaga(int id, int fileiraId) {
-		this.id = id;
-		this.fileiraId = fileiraId;
-	}
 
-	public Vaga(String tipo, int fileiraId, int id) {
-		this.id = id;
-		this.tipo = tipo;
-		this.fileiraId = fileiraId;
-	}
-
-	public Vaga(String tipo, int fileiraId) {
-
-		this.tipo = tipo;
-		this.fileiraId = fileiraId;
-	}
 
 	public int getId() {
 		return id;
@@ -66,18 +64,6 @@ public class Vaga implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getFileiraId() {
-		return fileiraId;
-	}
-
-	public int getIndexFileira() {
-		return indexFileira;
-	}
-
-	public void setIndexFileira(int indexFileira) {
-		this.indexFileira = indexFileira;
 	}
 
 	public int getEstado() {
@@ -96,9 +82,25 @@ public class Vaga implements Serializable {
 		this.tipo = tipo;
 	}
 
+	public Fileira getFileira() {
+		return fileira;
+	}
+
+	public void setFileira(Fileira fileira) {
+		this.fileira = fileira;
+	}
+
+	public int getIndexFileira() {
+		return indexFileira;
+	}
+
+	public void setIndexFileira(int indexFileira) {
+		this.indexFileira = indexFileira;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(fileiraId, id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -110,7 +112,21 @@ public class Vaga implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Vaga other = (Vaga) obj;
-		return fileiraId == other.fileiraId && id == other.id;
+		return id == other.id;
 	}
+
+
+
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
+
+	
 
 }

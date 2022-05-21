@@ -1,12 +1,20 @@
 package com.fatec.estacionamentotcc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 public class Usuario implements Serializable {
@@ -15,10 +23,19 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	private String email;
 	private String nome;
 	private String rg;
 	private String senha;
 	private String cargo;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="usuario")
+	private List<Ticket> tickets = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToOne(mappedBy="usuario")
+	private Movimento movimento;
 	
 	public Usuario() {
 		
@@ -32,8 +49,8 @@ public class Usuario implements Serializable {
 		this.cargo = cargo;
 	}
 
-	public Usuario(String nome, String senha) {
-		this.nome = nome;
+	public Usuario(String email, String senha) {
+		this.email = email;
 		this.senha = senha;
 	}
 
@@ -42,6 +59,14 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 		this.cargo = cargo;
 		this.rg = rg;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public String getNome() {
@@ -55,6 +80,7 @@ public class Usuario implements Serializable {
 	public String getRg() {
 		return rg;
 	}
+	
 
 	public void setRg(String rg) {
 		this.rg = rg;
@@ -75,9 +101,13 @@ public class Usuario implements Serializable {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
+	
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
 
-	public int getId() {
-		return id;
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
 	@Override
@@ -96,5 +126,15 @@ public class Usuario implements Serializable {
 		Usuario other = (Usuario) obj;
 		return id == other.id;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
 
 }
