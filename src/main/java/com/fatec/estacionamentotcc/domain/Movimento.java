@@ -48,10 +48,17 @@ public class Movimento implements Serializable {
 	public Movimento() {
 
 	}
+	
+	public Movimento(Vaga vaga, double valor, Usuario usuario,
+			int pagamento) {
+		this.vaga = vaga;
+		this.valor = valor;
+		this.usuario = usuario;
+		this.pagamento = pagamento;
+	}
 
 	public Movimento(int id, Date horaChegada, Date horaSaida, Vaga vaga, double valor, Usuario usuario,
 			int pagamento) {
-		super();
 		this.id = id;
 		this.horaChegada = horaChegada;
 		this.horaSaida = horaSaida;

@@ -48,7 +48,7 @@ public class FileiraResource {
 		return ResponseEntity.created(uri).build();
 
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Fileira obj, @PathVariable Integer id) {
 		obj.setId(id);

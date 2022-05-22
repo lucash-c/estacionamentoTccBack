@@ -50,7 +50,8 @@ public class EstacionamentotccApplication implements CommandLineRunner {
 
 		Cliente cliente = new Cliente("fulano");
 
-		Movimento mov = new Movimento(new Date(), new Date(), vaga1, cliente, 8788.98, user, 10);
+		Movimento mov = new Movimento(vaga1, 22.00, user,
+				1);
 
 		usuarioRepository.saveAll(Arrays.asList(user, user2));
 		fileiraRepository.saveAll(Arrays.asList(fileira1));

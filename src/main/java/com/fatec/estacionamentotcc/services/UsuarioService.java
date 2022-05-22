@@ -5,13 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.fatec.estacionamentotcc.domain.Usuario;
-import com.fatec.estacionamentotcc.domain.Vaga;
 import com.fatec.estacionamentotcc.repositories.UsuarioRepository;
 import com.fatec.estacionamentotcc.services.exceptions.ObjNotFoundException;
 
@@ -47,7 +43,7 @@ public class UsuarioService {
 		find(id);
 		repo.deleteById(id);
 	}
-	
+
 	public Usuario login(String email, String senha) {
 		return repo.login(email, senha);
 	}
