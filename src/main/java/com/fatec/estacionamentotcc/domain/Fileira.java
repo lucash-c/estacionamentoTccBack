@@ -2,54 +2,49 @@ package com.fatec.estacionamentotcc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+
 
 @Entity
 public class Fileira implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private ArrayList<Vaga> vagas;
+	
+
+	@OneToMany(mappedBy="fileira")
+	private List<Vaga> vagas = new ArrayList<>();
 	private String descricao;
 
 	public Fileira() {
-		
-	}
-	
-	public Fileira(ArrayList<Vaga> vagas, String descricao) {
-		this.vagas = vagas;
-		this.descricao = descricao;
 
-	}
-
-	public Fileira(ArrayList<Vaga> vagas, int id) {
-		this.vagas = vagas;
-		this.id = id;
-	}
-
-	public Fileira(ArrayList<Vaga> vagas, int id, String descricao) {
-		this.vagas = vagas;
-		this.descricao = descricao;
-		this.id = id;
 	}
 
 	public Fileira(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public ArrayList<Vaga> getVagas() {
-		return vagas;
+	
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setVagas(ArrayList<Vaga> vagas) {
+	public void setVagas(List<Vaga> vagas) {
 		this.vagas = vagas;
+	}
+
+	public List<Vaga> getVagas() {
+		return vagas;
 	}
 
 	public String getDescricao() {

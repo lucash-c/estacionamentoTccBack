@@ -12,6 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+
 
 /**
  * esta classe vai gerenciar os serviÃ§os prestados pelo estacionamento
@@ -31,8 +36,15 @@ public class Ticket implements Serializable {
 	private int permanencia;
 	private double valor;
 	private double valorHora;
+	
 
+	@OneToOne
+	@JoinColumn(name="vaga_id")
 	private Vaga vaga;
+	
+
+	@ManyToOne
+	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 
 	public Ticket() {
