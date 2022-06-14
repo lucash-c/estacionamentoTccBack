@@ -22,21 +22,24 @@ public class FileiraResource {
 
 	@Autowired
 	FileiraService service;
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Fileira obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
-	};
-
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
 		List<Fileira> obj = new ArrayList<>();
 		obj = service.findAll();
+
+		return ResponseEntity.ok().body(obj);
+	};
+	
+	@RequestMapping(value = "/{descricao}", method = RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable String descricao) {
+		Fileira obj = service.findByDesc(descricao);
 		return ResponseEntity.ok().body(obj);
 	};
 
-	@RequestMapping(method = RequestMethod.POST)
+<<<<<<< Updated upstream
+=======
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Fileira obj) {
 
 		obj = service.insert(obj);
@@ -49,16 +52,15 @@ public class FileiraResource {
 
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Fileira obj, @PathVariable Integer id) {
-		obj.setId(id);
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Fileira obj) {
 		obj = service.update(obj);
 
 		return ResponseEntity.noContent().build();
 
 	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	
+	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 
 		service.delete(id);
@@ -66,4 +68,6 @@ public class FileiraResource {
 
 	}
 
+	
+>>>>>>> Stashed changes
 }

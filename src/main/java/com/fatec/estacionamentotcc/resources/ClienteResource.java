@@ -1,8 +1,6 @@
 package com.fatec.estacionamentotcc.resources;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -27,18 +25,11 @@ public class ClienteResource {
 
 	@RequestMapping(value = "/{cod}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer cod) {
-		Cliente obj = service.find(cod);
+		Cliente obj = service.buscar(cod);
 		return ResponseEntity.ok().body(obj);
 	};
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> findAll() {
-		List<Cliente> obj = new ArrayList<>();
-		obj = service.findAll();
-		return ResponseEntity.ok().body(obj);
-	};
-
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Cliente obj) {
 
 		obj = service.insert(obj);
@@ -51,16 +42,15 @@ public class ClienteResource {
 
 	}
 
-	@RequestMapping(value = "/{cod}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Cliente obj, @PathVariable Integer cod) {
-		obj.setCod(cod);
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Cliente obj) {
 		obj = service.update(obj);
 
 		return ResponseEntity.noContent().build();
 
 	}
 
-	@RequestMapping(value = "/{cod}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/remove/{cod}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer cod) {
 
 		service.delete(cod);
@@ -68,4 +58,5 @@ public class ClienteResource {
 
 	}
 
+>>>>>>> Stashed changes
 }

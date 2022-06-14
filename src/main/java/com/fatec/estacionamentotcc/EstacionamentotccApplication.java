@@ -1,7 +1,6 @@
 package com.fatec.estacionamentotcc;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,9 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.fatec.estacionamentotcc.domain.Cliente;
 import com.fatec.estacionamentotcc.domain.Fileira;
-import com.fatec.estacionamentotcc.domain.Movimento;
 import com.fatec.estacionamentotcc.domain.Usuario;
-import com.fatec.estacionamentotcc.domain.Vaga;
+import com.fatec.estacionamentotcc.repositories.ClienteRepository;
 import com.fatec.estacionamentotcc.repositories.FileiraRepository;
 import com.fatec.estacionamentotcc.repositories.MovimentoRepository;
 import com.fatec.estacionamentotcc.repositories.UsuarioRepository;
@@ -23,12 +21,18 @@ public class EstacionamentotccApplication implements CommandLineRunner {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+<<<<<<< Updated upstream
+=======
 	@Autowired
 	private FileiraRepository fileiraRepository;
 	@Autowired
 	private VagaRepository vagaRepository;
 	@Autowired
 	private MovimentoRepository movimentoRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(EstacionamentotccApplication.class, args);
@@ -36,28 +40,37 @@ public class EstacionamentotccApplication implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 
+
 		Usuario user = new Usuario("lucas@teste.com", "assad44");
 		Usuario user2 = new Usuario("joao@teste.com", "sadds233");
 
-		Fileira fileira1 = new Fileira("A");
+		Fileira fileira1 = new Fileira("A", 10,20,30);
+		Fileira fileira2 =new Fileira("B", 0,0,10);
 
-		Vaga vaga1 = new Vaga("comum", fileira1);
-		Vaga vaga2 = new Vaga("comum", fileira1);
-		Vaga vaga3 = new Vaga("comum", fileira1);
-		Vaga vaga4 = new Vaga("comum", fileira1);
-		Vaga vaga5 = new Vaga("preferencial", fileira1);
-		Vaga vaga6 = new Vaga("mensalista", fileira1);
+	
 
 		Cliente cliente = new Cliente("fulano");
-
-		Movimento mov = new Movimento(vaga1, 22.00, user,
-				1);
-
-		usuarioRepository.saveAll(Arrays.asList(user, user2));
+		
+		
+		//LocalDateTime chegada = LocalDateTime.now();
+		//LocalDateTime saida = LocalDateTime.now();
+		
+	
+		//Movimento mov = new Movimento(chegada, saida, 22.0, 1 , vaga1, cliente, user);
+		
+		usuarioRepository.save(user);
+		usuarioRepository.save(user2);
+		clienteRepository.saveAll(Arrays.asList(cliente));	
 		fileiraRepository.saveAll(Arrays.asList(fileira1));
-		vagaRepository.saveAll(Arrays.asList(vaga1, vaga2, vaga3, vaga4, vaga5, vaga6));
+		fileiraRepository.save(fileira2);
+		vagaRepository.saveAll(fileira1.getVagas());
+		vagaRepository.saveAll(fileira2.getVagas());
+		
+		//movimentoRepository.saveAll(Arrays.asList(mov));
 
-		movimentoRepository.saveAll(Arrays.asList(mov));
+		
+		
+>>>>>>> Stashed changes
 	}
 
 }

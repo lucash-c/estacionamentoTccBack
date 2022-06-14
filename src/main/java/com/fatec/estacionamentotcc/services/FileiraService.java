@@ -11,7 +11,6 @@ import com.fatec.estacionamentotcc.domain.Fileira;
 import com.fatec.estacionamentotcc.domain.Vaga;
 import com.fatec.estacionamentotcc.repositories.FileiraRepository;
 import com.fatec.estacionamentotcc.repositories.VagaRepository;
-import com.fatec.estacionamentotcc.services.exceptions.ObjNotFoundException;
 
 @Service
 public class FileiraService {
@@ -25,7 +24,14 @@ public class FileiraService {
 	public Fileira find(Integer id) {
 
 		Optional<Fileira> obj = repo.findById(id);
+
 		return obj.orElseThrow(() -> new ObjNotFoundException("Fileira não encontrada! id:" + id));
+	}
+	
+	public Fileira findByDesc(String descricao) {
+
+		Optional<Fileira> obj = repo.searchByDesc(descricao);
+		return obj.orElseThrow(() -> new ObjNotFoundException("Fileira não encontrada! Descrição: " + descricao));
 	}
 
 	public List<Fileira> findAll() {
@@ -39,15 +45,29 @@ public class FileiraService {
 		 
 		Fileira fileira = repo.save(obj);
 		
-		int i = 0;
-		for(Vaga vaga : obj.getVagas() ) {
-			i++;
-			vaga.setIndexFileira(i);
-			vaga.setFileira(obj);
-			
+		for(int i = 0; i < obj.getCountComuns(); i++) {
+			Vaga vaga = new Vaga("comum", obj);
+			vaga.setIdFileira(obj.getId());
+			vaga.setIndexFileira(obj.getVagas().size()+1);
+			obj.getVagas().add(vaga);
 			repoVaga.save(vaga);
 		}
 		
+		for(int i = 0; i < obj.getCountPreferencial(); i++) {
+			Vaga vaga = new Vaga("preferencial", obj);
+			vaga.setIdFileira(obj.getId());
+			vaga.setIndexFileira(obj.getVagas().size()+1);
+			obj.getVagas().add(vaga);
+			repoVaga.save(vaga);
+		}
+		
+		for(int i = 0; i < obj.getCountMensalista(); i++) {
+			Vaga vaga = new Vaga("mensalista", obj);
+			vaga.setIdFileira(obj.getId());
+			vaga.setIndexFileira(obj.getVagas().size()+1);
+			obj.getVagas().add(vaga);
+			repoVaga.save(vaga);
+		}		
 		
 		return fileira;
 	}
@@ -55,11 +75,14 @@ public class FileiraService {
 	public Fileira update(Fileira obj) {
 		find(obj.getId());
 		return repo.save(obj);
+		
 	}
 
 	public void delete(Integer id) {
-		find(id);
-		repo.deleteById(id);
+		Fileira obj= find(id);
+		repoVaga.deleteAll(obj.getVagas());
+		repo.deleteById(obj.getId());
+
 	}
 
 }
