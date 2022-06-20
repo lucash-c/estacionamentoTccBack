@@ -1,6 +1,7 @@
 package com.fatec.estacionamentotcc.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -22,16 +23,22 @@ public class ClienteResource {
 
 	@Autowired
 	ClienteService service;
+	
+	@RequestMapping( method = RequestMethod.GET)
+	public ResponseEntity<?> findAll() {
+		List<Cliente> obj = service.findAll();
+		return ResponseEntity.ok().body(obj);
+	};
 
 	@RequestMapping(value = "/{cod}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer cod) {
-		Cliente obj = service.buscar(cod);
+		Cliente obj = service.find(cod);
 		return ResponseEntity.ok().body(obj);
 	};
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Cliente obj) {
-
+		//obj.setSerial(UUID.randomUUID().toString());
 		obj = service.insert(obj);
 
 		// criando response com request e seu respectivo id
@@ -58,5 +65,4 @@ public class ClienteResource {
 
 	}
 
->>>>>>> Stashed changes
 }

@@ -28,6 +28,8 @@ public class Usuario implements Serializable {
 	private String rg;
 	private String senha;
 	private String cargo;
+	private boolean success;
+	private double valorHora;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="usuario")
@@ -41,12 +43,15 @@ public class Usuario implements Serializable {
 		
 	}
 
-	public Usuario(int id, String nome, String rg, String senha, String cargo) {
+	public Usuario(int id, String nome, String rg, String senha, String cargo, String email) {
 		this.id = id;
 		this.nome = nome;
 		this.rg = rg;
 		this.senha = senha;
 		this.cargo = cargo;
+		this.email = email;
+		this.setSuccess(false);
+		
 	}
 
 	public Usuario(String email, String senha) {
@@ -133,6 +138,22 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public double getValorHora() {
+		return valorHora;
+	}
+
+	public void setValorHora(double valorHora) {
+		this.valorHora = valorHora;
 	}
 
 	

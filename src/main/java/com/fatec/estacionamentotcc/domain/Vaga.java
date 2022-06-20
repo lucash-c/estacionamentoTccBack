@@ -38,6 +38,8 @@ public class Vaga implements Serializable {
 	@JoinColumn(name="fileira_id")
 	private Fileira fileira;
 	private int indexFileira;
+	private int idFileira;
+	private String descFileira;
 
 	public Vaga() {
 
@@ -125,6 +127,22 @@ public class Vaga implements Serializable {
 
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
+	}
+
+	public int getIdFileira() {
+		return idFileira;
+	}
+
+	public void setIdFileira(int idFileira) {
+		this.idFileira = idFileira;
+	}
+
+	public String getDescFileira() {
+		return descFileira;
+	}
+
+	public void setDescFileira(String descFileira) {
+		this.descFileira = descFileira;
 	}
 
 	

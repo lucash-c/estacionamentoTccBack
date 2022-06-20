@@ -30,12 +30,18 @@ public class Ticket implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int cod;
+	private String serial;
 	private Date chegada;
 	private Date saida;
 	private int permanencia;
 	private double valor;
-	private double valorHora;
+	private String tipoVaga;
+	private boolean bloqueado;
+	private String tipoPagamento;
+	
+	@OneToOne
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
 	
 
 	@OneToOne
@@ -49,133 +55,7 @@ public class Ticket implements Serializable {
 
 	public Ticket() {
 	}
-
-	public Ticket(int cod) {
-		this.cod = cod;
-	}
-
-	public Ticket(int cod, String chegada, int permanencia, double valor, double valorHora, Vaga vaga,
-			Usuario usuario) {
-		this.cod = cod;
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		this.permanencia = permanencia;
-		this.valor = valor;
-		this.valorHora = valorHora;
-		this.vaga = vaga;
-		this.usuario = usuario;
-	}
-
-	public Ticket(Vaga vaga, Usuario usuario, String chegada, String saida) {
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		try {
-			this.saida = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(saida);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		this.vaga = vaga;
-		this.usuario = usuario;
-	}
-
-	public Ticket(String chegada, String saida, int permanencia) {
-
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		try {
-			this.saida = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(saida);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		this.permanencia = permanencia;
-	}
-
-	public Ticket(int cod, String chegada, String saida, int permanencia, double valor, double valorHora, Vaga vaga,
-			Usuario usuario) {
-		this.cod = cod;
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		try {
-			this.saida = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(saida);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		this.permanencia = permanencia;
-		this.valor = valor;
-		this.valorHora = valorHora;
-		this.vaga = vaga;
-		this.usuario = usuario;
-
-	}
-
-	public Ticket(String chegada, Vaga vaga, Usuario usuario) {
-
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		this.vaga = vaga;
-		this.usuario = usuario;
-	}
-
-	public Ticket(String chegada, Vaga vaga) {
-
-		this.vaga = vaga;
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
-
-	public Ticket(String chegada, Vaga vaga, Cliente cliente) {
-
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		this.vaga = vaga;
-	}
-
-	public Ticket(String chegada, Vaga vaga, String saida) {
-
-		try {
-			this.chegada = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(chegada);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		try {
-			this.saida = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(saida);
-		} catch (ParseException ex) {
-			Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		this.vaga = vaga;
-
-	}
-
+	
 	public void setPermanencia(int permanencia) {
 		this.permanencia = permanencia;
 	}
@@ -204,13 +84,7 @@ public class Ticket implements Serializable {
 		}
 	}
 
-	public int getCod() {
-		return cod;
-	}
 
-	public void setCod(int cod) {
-		this.cod = cod;
-	}
 
 	public double getValor() {
 		return valor;
@@ -220,13 +94,7 @@ public class Ticket implements Serializable {
 		this.valor = valor;
 	}
 
-	public double getValorHora() {
-		return valorHora;
-	}
 
-	public void setValorHora(double valorHora) {
-		this.valorHora = valorHora;
-	}
 
 	public Vaga getVaga() {
 		return vaga;
@@ -246,54 +114,17 @@ public class Ticket implements Serializable {
 
 	public long getPermanencia() {
 		return permanencia;
+	}	
+
+	public int getId() {
+		return id;
 	}
 
-	public String getDataHoraChegadaFormatada() {
-
-		return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(chegada);
-
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getDiaChegadaFormatada() {
-
-		return new SimpleDateFormat("dd-MM-yyyy").format(chegada);
-
-	}
-
-	public String getHoraChegadaFormatada() {
-		return new SimpleDateFormat("HH:mm:ss").format(chegada);
-	}
-
-	public void imprime(Ticket ticket) {
-
-	}
-
-	public String getDiaSaidaFormatada() {
-		return new SimpleDateFormat("dd-MM-yyyy").format(saida);
-	}
-
-	public String getDataHoraSaidaFormatada() {
-
-		if (saida != null) {
-			return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(saida);
-		} else {
-			return "";
-
-		}
-	}
-
-	public String getHoraSaidaFormatada() {
-
-		if (saida != null) {
-
-			return new SimpleDateFormat("HH:mm:ss").format(saida);
-		} else {
-
-			return "";
-
-		}
-	}
-
+	
 	public int getVagaId() {
 
 		return vaga.getId();
@@ -308,7 +139,7 @@ public class Ticket implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cod);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -320,7 +151,49 @@ public class Ticket implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
-		return cod == other.cod;
+		return id == other.id;
 	}
+
+	public String getTipoVaga() {
+		return tipoVaga;
+	}
+
+	public void setTipoVaga(String tipoVaga) {
+		this.tipoVaga = tipoVaga;
+	}
+
+	public boolean isBloqueado() {
+		return bloqueado;
+	}
+
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
+	}
+
+	public String getTipoPagamento() {
+		return tipoPagamento;
+	}
+
+	public void setTipoPagamento(String tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
+	}
+
+	public String getSerial() {
+		return serial;
+	}
+
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	
 
 }

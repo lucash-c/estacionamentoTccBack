@@ -14,4 +14,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	@Transactional(readOnly=true)
 	@Query("SELECT DISTINCT obj FROM Usuario obj WHERE obj.email LIKE %:email% AND obj.senha LIKE %:senha% ")
 	Usuario login(@Param("email") String email, @Param("senha") String senha);
+	
 }

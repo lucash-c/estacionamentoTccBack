@@ -35,13 +35,11 @@ public class TicketService {
 	}
 
 	public Ticket update(Ticket obj) {
-		find(obj.getCod());
 		return repo.save(obj);
 	}
 
-	public void delete(Integer cod) {
-		find(cod);
-		repo.deleteById(cod);
+	public void delete(Integer id) {
+		repo.deleteById(id);
 	}
 
 }

@@ -36,9 +36,13 @@ public class FileiraResource {
 		Fileira obj = service.findByDesc(descricao);
 		return ResponseEntity.ok().body(obj);
 	};
+	
+	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id) {
+		Fileira obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+	};
 
-<<<<<<< Updated upstream
-=======
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Fileira obj) {
 
@@ -67,7 +71,5 @@ public class FileiraResource {
 		return ResponseEntity.noContent().build();
 
 	}
-
-	
->>>>>>> Stashed changes
 }
+

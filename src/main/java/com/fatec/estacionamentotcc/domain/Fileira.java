@@ -25,16 +25,28 @@ public class Fileira implements Serializable {
 	@OneToMany(mappedBy="fileira")
 	private List<Vaga> vagas = new ArrayList<>();
 	private String descricao;
+	private int countComuns;
+	private int countPreferencial;
+	private int countMensalista;
+	private int countDispComuns;
+	private int countDispPreferencial;
+	private int countDispMensalista;
 
 	public Fileira() {
-
 	}
 
 	public Fileira(String descricao) {
 		this.descricao = descricao;
+	}	
+	
+	public Fileira(String descricao, int countComuns, int countPreferencial, int countMensalista) {
+		this.descricao = descricao;
+		this.countComuns = countComuns;
+		this.countPreferencial = countPreferencial;
+		this.countMensalista = countMensalista;
+		
 	}
-	
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -78,6 +90,54 @@ public class Fileira implements Serializable {
 			return false;
 		Fileira other = (Fileira) obj;
 		return id == other.id;
+	}
+
+	public int getCountComuns() {
+		return countComuns;
+	}
+
+	public void setCountComuns(int countComuns) {
+		this.countComuns = countComuns;
+	}
+
+	public int getCountPreferencial() {
+		return countPreferencial;
+	}
+
+	public void setCountPreferencial(int countPreferencial) {
+		this.countPreferencial = countPreferencial;
+	}
+
+	public int getCountMensalista() {
+		return countMensalista;
+	}
+
+	public void setCountMensalista(int countMensalista) {
+		this.countMensalista = countMensalista;
+	}
+
+	public int getCountDispComuns() {
+		return countDispComuns;
+	}
+
+	public void setCountDispComuns(int countDispComuns) {
+		this.countDispComuns = countDispComuns;
+	}
+
+	public int getCountDispPreferencial() {
+		return countDispPreferencial;
+	}
+
+	public void setCountDispPreferencial(int countDispPreferencial) {
+		this.countDispPreferencial = countDispPreferencial;
+	}
+
+	public int getCountDispMensalista() {
+		return countDispMensalista;
+	}
+
+	public void setCountDispMensalista(int countDispMensalista) {
+		this.countDispMensalista = countDispMensalista;
 	}
 
 }

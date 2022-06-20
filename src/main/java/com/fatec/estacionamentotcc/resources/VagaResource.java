@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fatec.estacionamentotcc.domain.Vaga;
+import com.fatec.estacionamentotcc.services.FileiraService;
 import com.fatec.estacionamentotcc.services.VagaService;
 
 @RestController
@@ -20,7 +22,9 @@ public class VagaResource {
 
 	@Autowired
 	VagaService service;
-
+	
+	@Autowired
+	FileiraService serviceFileira;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
@@ -32,7 +36,18 @@ public class VagaResource {
 	@RequestMapping(value = "/{tipo}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable String tipo) {
 		Page<Vaga> vagas = service.searchVagaDisp(tipo);
-		return ResponseEntity.ok().body(vagas);
+		return ResponseEntity.ok().body(vagas.get().findFirst());
 	};
+	
+
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Vaga obj) {
+		obj = service.update(obj);
+		
+		
+
+		return ResponseEntity.noContent().build();
+
+	}
 
 }

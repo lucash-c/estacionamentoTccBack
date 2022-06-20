@@ -11,6 +11,7 @@ import com.fatec.estacionamentotcc.domain.Fileira;
 import com.fatec.estacionamentotcc.domain.Vaga;
 import com.fatec.estacionamentotcc.repositories.FileiraRepository;
 import com.fatec.estacionamentotcc.repositories.VagaRepository;
+import com.fatec.estacionamentotcc.services.exceptions.ObjNotFoundException;
 
 @Service
 public class FileiraService {
@@ -38,6 +39,28 @@ public class FileiraService {
 
 		List<Fileira> obj = new ArrayList<>();
 		obj = repo.findAll();
+		
+		for(Fileira fileira : obj) {
+			fileira.setCountDispComuns(0);
+			fileira.setCountDispMensalista(0);
+			fileira.setCountDispPreferencial(0);
+			
+			for(Vaga vaga : fileira.getVagas()) {
+				if("comum".equals(vaga.getTipo())  && vaga.getEstado() == 0) {
+					fileira.setCountDispComuns(fileira.getCountDispComuns()+1);
+				}
+				
+					if("preferencial".equals(vaga.getTipo())  && vaga.getEstado() == 0) {
+						fileira.setCountDispPreferencial(fileira.getCountDispPreferencial()+1);
+					}
+					
+					if("mensalista".equals(vaga.getTipo())  && vaga.getEstado() == 0) {
+						fileira.setCountDispMensalista(fileira.getCountDispMensalista()+1);
+					}			
+				
+			}
+			
+		}
 		return obj;
 	}
 
@@ -48,6 +71,7 @@ public class FileiraService {
 		for(int i = 0; i < obj.getCountComuns(); i++) {
 			Vaga vaga = new Vaga("comum", obj);
 			vaga.setIdFileira(obj.getId());
+			vaga.setDescFileira(obj.getDescricao());
 			vaga.setIndexFileira(obj.getVagas().size()+1);
 			obj.getVagas().add(vaga);
 			repoVaga.save(vaga);
@@ -55,6 +79,7 @@ public class FileiraService {
 		
 		for(int i = 0; i < obj.getCountPreferencial(); i++) {
 			Vaga vaga = new Vaga("preferencial", obj);
+			vaga.setDescFileira(obj.getDescricao());
 			vaga.setIdFileira(obj.getId());
 			vaga.setIndexFileira(obj.getVagas().size()+1);
 			obj.getVagas().add(vaga);
@@ -64,6 +89,7 @@ public class FileiraService {
 		for(int i = 0; i < obj.getCountMensalista(); i++) {
 			Vaga vaga = new Vaga("mensalista", obj);
 			vaga.setIdFileira(obj.getId());
+			vaga.setDescFileira(obj.getDescricao());
 			vaga.setIndexFileira(obj.getVagas().size()+1);
 			obj.getVagas().add(vaga);
 			repoVaga.save(vaga);

@@ -32,7 +32,6 @@ public class ClienteService {
 	}
 
 	public Cliente update(Cliente obj) {
-		find(obj.getCod());
 		return repo.save(obj);
 	}
 

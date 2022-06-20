@@ -11,8 +11,6 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
 @Entity
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +18,7 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cod;
+	private String serial;
 	private String nome;
 	private String telefone;
 	private String rg;
@@ -27,25 +26,25 @@ public class Cliente implements Serializable {
 	private String vencimento;
 	private boolean bloqueado;
 	private String observacao;
-	
+
 	@JsonIgnore
-	@OneToOne(mappedBy="cliente")
+	@OneToOne(mappedBy = "cliente")
+	private Ticket ticket;
+
+	@JsonIgnore
+	@OneToOne(mappedBy = "cliente")
 	private Movimento movimento;
 
 	public Cliente() {
 	}
-	
-	
 
 	public Cliente(String nome) {
 		this.nome = nome;
 	}
 
-
-
 	public Cliente(int cod, String nome, String telefone, String rg, double mensalidade, String vencimento,
-			 String observacao) {
-	
+			String serial, String observacao) {
+
 		this.cod = cod;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -53,8 +52,9 @@ public class Cliente implements Serializable {
 		this.mensalidade = mensalidade;
 		this.vencimento = vencimento;
 		this.bloqueado = false;
+		this.serial = serial;
 		this.observacao = observacao;
-		
+
 	}
 
 	public Cliente(int cod, String nome, String telefone, String rg, double mensalidade, String vencimento,
@@ -68,7 +68,7 @@ public class Cliente implements Serializable {
 		this.bloqueado = bloqueado;
 		this.observacao = observacao;
 		this.movimento = movimento;
-	}	
+	}
 
 	public int getCod() {
 		return cod;
@@ -146,6 +146,14 @@ public class Cliente implements Serializable {
 		this.movimento = movimento;
 	}
 
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(cod);
@@ -162,11 +170,13 @@ public class Cliente implements Serializable {
 		Cliente other = (Cliente) obj;
 		return cod == other.cod;
 	}
-	
-	
-	
-	
 
-	
+	public String getSerial() {
+		return serial;
+	}
+
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
 
 }

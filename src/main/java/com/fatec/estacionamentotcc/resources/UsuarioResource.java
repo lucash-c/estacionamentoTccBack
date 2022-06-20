@@ -61,14 +61,16 @@ public class UsuarioResource {
 
 	}
 
-	@RequestMapping(value = "/{login}", method = RequestMethod.GET)
-	public ResponseEntity<?> login(@RequestParam(value = "email", defaultValue = "") String email,
-			@RequestParam(value = "senha", defaultValue = "") String senha) {
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ResponseEntity<?> login(@RequestParam(required = true) String email,
+			@RequestParam(required = true) String senha) {
 		Usuario usuario = service.login(email, senha);
-
+		
+	
 		if (usuario == null) {
 			return ResponseEntity.notFound().build();
 		} else {
+			usuario.setSuccess(true);
 			return ResponseEntity.ok().body(usuario);
 		}
 	};
